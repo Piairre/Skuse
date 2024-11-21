@@ -1,0 +1,25 @@
+{
+  "name": "piairre/skuse",
+  "description": "Modern OpenAPI documentation UI alternative to Swagger",
+  "version": "0.1.0",
+  "type": "symfony-bundle",
+  "require": {
+    "php": ">=7.4",
+    "symfony/framework-bundle": "^5.4.24 || ^6.4 || ^7.0"
+  },
+  "scripts": {
+    "build-assets": "cd assets/skuse-ui && pnpm install && pnpm run build"
+  },
+  "autoload": {
+    "psr-4": {
+      "Piairre\\Skuse\\": "src/"
+    }
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Pierre Iaccarino",
+      "email": "freelance@pierreiaccarino.fr"
+    }
+  ]
+}

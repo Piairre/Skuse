@@ -1,0 +1,18 @@
+{# Skuse/Resources/views/documentation.html.twig #}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>API Documentation</title>
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+    <link rel="stylesheet" href="{{ asset('bundles/piairreskuse/build/style.css') }}">
+</head>
+<body>
+    <div id="skuse-root"></div>
+    <script>
+        window.OPENAPI_SPEC = {{ openapi_spec|raw }};
+    </script>
+    <script src="{{ asset('bundles/piairreskuse/skuse.umd.js') }}"></script>
+</body>
+</html>

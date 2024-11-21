@@ -1,0 +1,12 @@
+# Symfony
+vendor/
+var/
+*.log
+.env*
+*.env.local
+/config/packages/dev/*
+/config/services_test.yaml
+Resources/public
+
+# IDE
+.idea/

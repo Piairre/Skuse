@@ -1,0 +1,3 @@
+piairre.skuse.routes:
+  type: annotation
+  resource: '../src/Controller/'

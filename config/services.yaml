@@ -1,0 +1,16 @@
+parameters:
+
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  # Generator
+  Piairre\Skuse\Generator\OpenApiGenerator: ~
+
+  # Controller
+  Piairre\Skuse\Controller\DocumentationController: ~
+
+  # Extractor
+  Piairre\Skuse\Extractor\ExtractorInterface:
+    class: Piairre\Skuse\Extractor\RouteExtractor
