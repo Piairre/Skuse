@@ -13,4 +13,4 @@ services:
 
   # Extractor
   Piairre\Skuse\Extractor\ExtractorInterface:
-    class: Piairre\Skuse\Extractor\RouteExtractor
+    class: Piairre\Skuse\Extractor\OpenApiExtractor

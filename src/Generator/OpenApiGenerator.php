@@ -2,37 +2,35 @@
 
 namespace Piairre\Skuse\Generator;
 
-use Piairre\Skuse\Extractor\ExtractorInterface;
+use Exception;
+use Symfony\Component\HttpFoundation\RequestStack;
+
 class OpenApiGenerator
 {
-    private ExtractorInterface $extractor;
+    private RequestStack $requestStack;
+    private string $docsJsonPath;
 
-    public function __construct(ExtractorInterface $extractor) {
-        $this->extractor = $extractor;
+    public function __construct(RequestStack $requestStack, string $docsJsonPath = 'docs.jsonopenapi')
+    {
+        $this->requestStack = $requestStack;
+        $this->docsJsonPath = $docsJsonPath;
     }
 
     public function generate(): array
     {
-        $endpoints = $this->extractor->extract();
+        $basePath = $this->requestStack->getCurrentRequest()->getSchemeAndHttpHost();
+        $jsonOpenApiPath = $basePath . '/' . $this->docsJsonPath;
 
-        // Conversion des endpoints en spécification OpenAPI
-        $spec = [
-            'openapi' => '3.0.0',
-            'paths' => []
-        ];
+        try {
+            $jsonOpenApi = file_get_contents($jsonOpenApiPath);
+        } catch (Exception) {
+            throw new Exception('Invalid path. URL : ' . $jsonOpenApiPath);
+        }
 
-        foreach ($endpoints as $endpoint) {
-            $spec['paths'][$endpoint->path] = array_reduce(
-                $endpoint->methods,
-                fn($carry, $method) => [
-                    ...($carry ?? []),
-                    strtolower($method) => [
-                        'summary' => $endpoint->name,
-                        'description' => $endpoint->description
-                    ]
-                ],
-                []
-            );
+        $spec = json_decode($jsonOpenApi, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new Exception('Error while reading documentation : ' . json_last_error_msg());
         }
 
         return $spec;

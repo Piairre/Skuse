@@ -4,6 +4,7 @@ namespace Piairre\Skuse\Extractor;
 
 use Symfony\Component\Routing\RouterInterface;
 use Piairre\Skuse\Model\Endpoint;
+
 class RouteExtractor implements ExtractorInterface
 {
     private RouterInterface $router;
