@@ -10,7 +10,3 @@ services:
 
   # Controller
   Piairre\Skuse\Controller\DocumentationController: ~
-
-  # Extractor
-  Piairre\Skuse\Extractor\ExtractorInterface:
-    class: Piairre\Skuse\Extractor\RouteExtractor

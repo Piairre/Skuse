@@ -2,37 +2,43 @@
 
 namespace Piairre\Skuse\Generator;
 
-use Piairre\Skuse\Extractor\ExtractorInterface;
+use Exception;
+use OpenApi\Annotations\OpenApi;
+use OpenApi\Serializer;
+use Symfony\Component\HttpFoundation\RequestStack;
+
 class OpenApiGenerator
 {
-    private ExtractorInterface $extractor;
-
-    public function __construct(ExtractorInterface $extractor) {
-        $this->extractor = $extractor;
+    public function __construct(
+        private RequestStack $requestStack,
+        private string $docsJsonPath = 'docs.jsonopenapi'
+    ) {
     }
 
-    public function generate(): array
+    /**
+     * @throws Exception
+     */
+    public function generate(): OpenAPI
     {
-        $endpoints = $this->extractor->extract();
+        $basePath = $this->requestStack->getCurrentRequest()->getSchemeAndHttpHost();
+        $jsonOpenApiPath = $basePath . '/' . $this->docsJsonPath;
 
-        // Conversion des endpoints en spécification OpenAPI
-        $spec = [
-            'openapi' => '3.0.0',
-            'paths' => []
-        ];
+        try {
+            $jsonOpenApi = file_get_contents($jsonOpenApiPath);
+        } catch (Exception) {
+            throw new Exception('Invalid path. URL : ' . $jsonOpenApiPath);
+        }
 
-        foreach ($endpoints as $endpoint) {
-            $spec['paths'][$endpoint->path] = array_reduce(
-                $endpoint->methods,
-                fn($carry, $method) => [
-                    ...($carry ?? []),
-                    strtolower($method) => [
-                        'summary' => $endpoint->name,
-                        'description' => $endpoint->description
-                    ]
-                ],
-                []
-            );
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new Exception('Error while reading documentation : ' . json_last_error_msg());
+        }
+
+        $serializer = new Serializer();
+
+        try {
+            $spec = $serializer->deserialize($jsonOpenApi, OpenAPI::class);
+        } catch (Exception $e) {
+            throw new Exception('Error while reading OpenAPI specification : ' . $e->getMessage());
         }
 
         return $spec;
