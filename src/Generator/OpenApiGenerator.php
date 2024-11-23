@@ -3,20 +3,22 @@
 namespace Piairre\Skuse\Generator;
 
 use Exception;
+use OpenApi\Annotations\OpenApi;
+use OpenApi\Serializer;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class OpenApiGenerator
 {
-    private RequestStack $requestStack;
-    private string $docsJsonPath;
-
-    public function __construct(RequestStack $requestStack, string $docsJsonPath = 'docs.jsonopenapi')
-    {
-        $this->requestStack = $requestStack;
-        $this->docsJsonPath = $docsJsonPath;
+    public function __construct(
+        private RequestStack $requestStack,
+        private string $docsJsonPath = 'docs.jsonopenapi'
+    ) {
     }
 
-    public function generate(): array
+    /**
+     * @throws Exception
+     */
+    public function generate(): OpenAPI
     {
         $basePath = $this->requestStack->getCurrentRequest()->getSchemeAndHttpHost();
         $jsonOpenApiPath = $basePath . '/' . $this->docsJsonPath;
@@ -27,10 +29,16 @@ class OpenApiGenerator
             throw new Exception('Invalid path. URL : ' . $jsonOpenApiPath);
         }
 
-        $spec = json_decode($jsonOpenApi, true);
-
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new Exception('Error while reading documentation : ' . json_last_error_msg());
+        }
+
+        $serializer = new Serializer();
+
+        try {
+            $spec = $serializer->deserialize($jsonOpenApi, OpenAPI::class);
+        } catch (Exception $e) {
+            throw new Exception('Error while reading OpenAPI specification : ' . $e->getMessage());
         }
 
         return $spec;

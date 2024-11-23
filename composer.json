@@ -5,7 +5,8 @@
   "type": "symfony-bundle",
   "require": {
     "php": ">=7.4",
-    "symfony/framework-bundle": "^5.4.24 || ^6.4 || ^7.0"
+    "symfony/framework-bundle": "^5.4.24 || ^6.4 || ^7.0",
+    "zircote/swagger-php": "^4.11"
   },
   "scripts": {
     "build-assets": "cd assets/skuse-ui && pnpm install && pnpm run build"
