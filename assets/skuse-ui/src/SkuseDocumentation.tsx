@@ -9,6 +9,8 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Header from "@/components/openapi/Header";
+import Sidebar from "@/components/openapi/Sidebar";
 
 export const SkuseDocumentation: React.FC = () => {
     const { spec, error, isLoading } = useApiSpec();
@@ -28,66 +30,15 @@ export const SkuseDocumentation: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 p-8">
-            <Card className="mb-8">
-                <CardHeader>
-                    <CardTitle className="text-3xl">{spec.info.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <p className="text-muted-foreground">{spec.info.description}</p>
-                    <div className="mt-4 flex items-center space-x-4">
-                        <Badge variant="secondary">Version: {spec.info.version}</Badge>
-                    </div>
-                </CardContent>
-            </Card>
-
-            <Tabs defaultValue="paths">
-                <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger value="paths">Endpoints</TabsTrigger>
-                    <TabsTrigger value="schemas">Schemas</TabsTrigger>
-                </TabsList>
-                <TabsContent value="paths">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {Object.entries(spec.paths).map(([path, pathItem]) => (
-                            <Card key={path}>
-                                <CardHeader>
-                                    <CardTitle className="text-lg truncate">{path}</CardTitle>
-                                </CardHeader>
-                                <CardContent>
-                                    <div className="space-y-2">
-                                        {Object.entries(pathItem as OpenAPIV3.PathItemObject)
-                                            .filter(([method]) => method !== '$ref')
-                                            .map(([method, operation]) => {
-                                                const op = operation as OpenAPIV3.OperationObject;
-                                                return (
-                                                    <div
-                                                        key={method}
-                                                        className="flex items-center space-x-2"
-                                                    >
-                                                        <Badge
-                                                            className={`uppercase ${getMethodColor(method)}`}
-                                                        >
-                                                            {method}
-                                                        </Badge>
-                                                        <span className="text-sm text-muted-foreground truncate">
-                                                            {op.summary || op.description || 'Aucune description'}
-                                                        </span>
-                                                    </div>
-                                                );
-                                            })}
-                                    </div>
-                                </CardContent>
-                            </Card>
-                        ))}
-                    </div>
-                </TabsContent>
-                <TabsContent value="schemas">
-                    {/* TODO: Implémenter la vue des schemas */}
-                    <div className="text-center text-muted-foreground">
-                        Schemas non encore implémentés
-                    </div>
-                </TabsContent>
-            </Tabs>
+        <div className="min-h-screen bg-gray-50">
+            <div className="flex">
+                <div className="w-1/4 p-2">
+                    <Sidebar document={spec} />
+                </div>
+                <div className="w-3/4 p-4">
+                    <Header document={spec} />
+                </div>
+            </div>
         </div>
     );
 };

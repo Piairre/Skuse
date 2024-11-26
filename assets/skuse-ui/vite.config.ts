@@ -29,11 +29,11 @@ export default defineConfig({
           'react-dom': 'ReactDOM'
         },
         assetFileNames: (info): string => {
-          const { source, name = '' } = info;
+          const { source, names = [''] } = info;
           if (source && source.toString().includes('css')) {
             return 'build/skuse.css';
           }
-          return `build/${name}`;
+          return `build/${names[0]}`;
         }
       }
     }
