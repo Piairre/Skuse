@@ -1,3 +1,7 @@
+# This is useless -- but want want to define some definitive routes for the bundle
 piairre.skuse.routes:
-  type: annotation
-  resource: '../src/Controller/'
+  resource:
+    path: '@PiairreSkuseBundle/src/Controller/'
+    namespace: Piairre\Skuse\Controller
+  type: attribute
+  prefix: piairre_skuse

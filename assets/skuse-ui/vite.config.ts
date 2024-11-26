@@ -5,9 +5,14 @@ import type { UserConfig } from 'vite'
 
 export default defineConfig({
   define: {
-    'process.env': '{}',
+    'process.env': process.env
   },
   plugins: [react()],
+  resolve: {
+    alias: {
+      "@": resolve(__dirname, "./src"),
+    },
+  },
   build: {
     lib: {
       entry: resolve(__dirname, 'src/main.tsx'),
@@ -33,4 +38,4 @@ export default defineConfig({
       }
     }
   }
-} as UserConfig);
+} satisfies UserConfig);

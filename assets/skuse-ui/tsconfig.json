@@ -3,5 +3,18 @@
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ]
+  ],
+  "include": ["src"],
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
+    "module": "ESNext",
+    "noEmit": true,
+    "moduleResolution": "Bundler",
+    "noUncheckedIndexedAccess": true,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
 }

@@ -4,7 +4,9 @@ namespace Piairre\Skuse\Controller;
 use Exception;
 use Piairre\Skuse\Generator\OpenApiGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class DocumentationController extends AbstractController
 {
@@ -15,15 +17,20 @@ class DocumentationController extends AbstractController
         $this->generator = $generator;
     }
 
+    #[Route('/bundles/skuse/documentation', name: 'documentation')]
+    public function documentation(): Response
+    {
+        return $this->render('@PiairreSkuse/documentation.html.twig');
+    }
+
     /**
      * @throws Exception
      */
-    public function __invoke(): Response
+    #[Route('/bundles/skuse/openapispec', name: 'openApiSpec')]
+    public function openApiSpec(): JsonResponse
     {
         $spec = $this->generator->generate();
 
-        return $this->render('@PiairreSkuse/documentation.html.twig', [
-            'openapi_spec' => $spec->toJson(),
-        ]);
+        return new JsonResponse($spec);
     }
 }
