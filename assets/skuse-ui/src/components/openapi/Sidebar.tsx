@@ -52,7 +52,7 @@ const Sidebar: React.FC<OpenAPISidebarProps> = ({ document }) => {
     }, [document.paths]);
 
     return (
-        <div className="w-80 bg-secondary/10 h-screen overflow-y-auto">
+        <div className="w-80 bg-secondary/10 shadow-lg h-screen overflow-y-auto mt-2">
             {Object.entries(groupedEndpoints).map(([tag, endpoints]) => (
                 <Collapsible key={tag} open={openTag === tag} onOpenChange={(isOpen) => setOpenTag(isOpen ? tag : null)}>
                     <CollapsibleTrigger asChild>
@@ -71,9 +71,9 @@ const Sidebar: React.FC<OpenAPISidebarProps> = ({ document }) => {
                             {endpoints.map(({ path, method, operation }, index) => (
                                 <div
                                     key={`${path}-${method}-${index}`}
-                                    className="flex items-center space-x-2 p-2 hover:bg-secondary/20 rounded-lg cursor-pointer"
+                                    className={`flex items-center space-x-2 p-2 hover:bg-secondary/20 cursor-pointer hover:border-l-4 hover:bg-secondary transition-all duration-200`}
                                 >
-                                    <Badge className={`${httpMethodColors[method.toLowerCase()]} text-white uppercase w-14 flex justify-center items-center`}>
+                                    <Badge variant={'default'} className={`${httpMethodColors[method.toLowerCase()]} text-white uppercase w-14 flex justify-center items-center`}>
                                         {method}
                                     </Badge>
                                     <div className="flex-1 min-w-0">

@@ -1,20 +1,9 @@
 import React from 'react';
-import {
-    Card,
-    CardHeader,
-    CardTitle,
-    CardDescription,
-    CardContent
-} from "@/components/ui/card";
+import {Card, CardHeader, CardTitle, CardDescription, CardContent} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import {
-    ExternalLink,
-    BookOpenText,
-    Scale,
-    Contact2,
-    Server
-} from 'lucide-react';
+import {ExternalLink, BookOpenText, Scale, Contact2, Server} from 'lucide-react';
 import {OpenAPIV3} from "openapi-types";
+import FormattedMarkdown from "@/components/openapi/FormattedMarkdown";
 
 // Using the OpenAPI types you provided directly
 interface OpenAPIHeaderProps {
@@ -47,8 +36,8 @@ const Header: React.FC<OpenAPIHeaderProps> = ({ document }) => {
                     </Badge>
                 </div>
                 {info.description && (
-                    <CardDescription className="mt-2 text-muted-foreground">
-                        {info.description}
+                    <CardDescription className="mt-2">
+                        <FormattedMarkdown markdown={info.description} />
                     </CardDescription>
                 )}
             </CardHeader>

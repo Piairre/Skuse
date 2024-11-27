@@ -32,10 +32,10 @@ export const SkuseDocumentation: React.FC = () => {
     return (
         <div className="min-h-screen bg-gray-50">
             <div className="flex">
-                <div className="w-1/4 p-2">
+                <div className="w-1/3">
                     <Sidebar document={spec} />
                 </div>
-                <div className="w-3/4 p-4">
+                <div className="w-2/3">
                     <Header document={spec} />
                 </div>
             </div>
