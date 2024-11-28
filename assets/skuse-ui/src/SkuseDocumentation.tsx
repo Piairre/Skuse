@@ -1,12 +1,12 @@
 import React from 'react';
-import { useApiSpec } from './hooks/useApiSpec';
+import {useApiSpec} from './hooks/useApiSpec';
 import Header from "@/components/openapi/Header";
 import Sidebar from "@/components/openapi/Sidebar";
-import Auth from "@/components/openapi/Auth";
+import Auth from "@/components/openapi/Auth/AuthButton";
 import Servers from "@/components/openapi/Servers";
 
 export const SkuseDocumentation: React.FC = () => {
-    const { spec, error, isLoading } = useApiSpec();
+    const {spec, error, isLoading} = useApiSpec();
 
     if (isLoading) return <div>Chargement...</div>;
     if (error) return <div>Erreur : {error.message}</div>;

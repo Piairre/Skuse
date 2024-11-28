@@ -1,6 +1,6 @@
 import React from 'react';
 import {Card, CardHeader, CardTitle, CardDescription, CardContent} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import {Badge} from "@/components/ui/badge";
 import {
     ExternalLink,
     BookOpenText,
@@ -16,7 +16,7 @@ interface OpenAPIHeaderProps {
     document: OpenAPIV3.Document;
 }
 
-const Header: React.FC<OpenAPIHeaderProps> = ({ document }) => {
+const Header: React.FC<OpenAPIHeaderProps> = ({document}) => {
     // Provide default values and handle potential undefined cases
     const info = document?.info ?? {
         title: 'API Documentation',
@@ -27,17 +27,18 @@ const Header: React.FC<OpenAPIHeaderProps> = ({ document }) => {
         termsOfService: undefined
     };
 
-    const servers = document?.servers ?? [];
     const externalDocs = document?.externalDocs;
 
     return (
         <Card className="w-full mx-auto">
             <CardHeader>
                 <div className="flex">
-                    <Badge variant="outline" className="border-black/80 flex justify-center items-center px-3 py-1 w-24 me-2">
+                    <Badge variant="outline"
+                           className="border-black text-black hover:bg-black hover:text-white flex justify-center items-center px-3 py-1 w-24 me-2">
                         API: {info.version}
                     </Badge>
-                    <Badge variant="outline" className="border-green-500 flex justify-center items-center px-3 py-1 w-24">
+                    <Badge variant="outline"
+                           className="border-green-500 text-green-500 hover:bg-green-500 hover:text-white flex justify-center items-center px-3 py-1 w-24">
                         OAS: {document.openapi}
                     </Badge>
                 </div>
@@ -48,7 +49,7 @@ const Header: React.FC<OpenAPIHeaderProps> = ({ document }) => {
 
                 {info.description && (
                     <CardDescription className="mt-2">
-                        <FormattedMarkdown markdown={info.description} />
+                        <FormattedMarkdown markdown={info.description}/>
                     </CardDescription>
                 )}
             </CardHeader>
@@ -110,7 +111,8 @@ const Header: React.FC<OpenAPIHeaderProps> = ({ document }) => {
                                 </h3>
                                 <div className="flex items-center space-x-2">
                                     <p>View</p>
-                                    <a href={info.termsOfService} target="_blank" rel="noopener noreferrer" className="flex items-center text-blue-600 hover:underline">
+                                    <a href={info.termsOfService} target="_blank" rel="noopener noreferrer"
+                                       className="flex items-center text-blue-600 hover:underline">
                                         <ExternalLink className="w-4 h-4 text-primary"/>
                                     </a>
                                 </div>

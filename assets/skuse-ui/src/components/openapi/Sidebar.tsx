@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ChevronDown, ChevronUp} from 'lucide-react';
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { OpenAPIV3 } from "openapi-types";
+import React, {useState} from 'react';
+import {Collapsible, CollapsibleContent, CollapsibleTrigger} from "@/components/ui/collapsible";
+import {ChevronDown, ChevronUp} from 'lucide-react';
+import {Badge} from "@/components/ui/badge";
+import {Button} from "@/components/ui/button";
+import {OpenAPIV3} from "openapi-types";
 
 interface OpenAPISidebarProps {
     document: OpenAPIV3.Document;
@@ -20,12 +20,16 @@ const httpMethodColors: Record<OpenAPIV3.HttpMethods, string> = {
     trace: 'bg-pink-500'
 };
 
-const Sidebar: React.FC<OpenAPISidebarProps> = ({ document }) => {
+const Sidebar: React.FC<OpenAPISidebarProps> = ({document}) => {
     const [openTag, setOpenTag] = useState<string | null>(null);
 
     // Group endpoints by tags
     const groupedEndpoints = React.useMemo(() => {
-        const groups: Record<string, { path: string, method: OpenAPIV3.HttpMethods, operation: OpenAPIV3.OperationObject }[]> = {};
+        const groups: Record<string, {
+            path: string,
+            method: OpenAPIV3.HttpMethods,
+            operation: OpenAPIV3.OperationObject
+        }[]> = {};
 
         // Iterate through paths
         Object.entries(document.paths).forEach(([path, pathItem]) => {
@@ -43,7 +47,7 @@ const Sidebar: React.FC<OpenAPISidebarProps> = ({ document }) => {
                     if (!groups[tag]) {
                         groups[tag] = [];
                     }
-                    groups[tag].push({ path, method, operation });
+                    groups[tag].push({path, method, operation});
                 });
             });
         });
@@ -54,7 +58,8 @@ const Sidebar: React.FC<OpenAPISidebarProps> = ({ document }) => {
     return (
         <div className="w-80 bg-secondary/10 shadow-lg h-screen overflow-y-auto mt-2">
             {Object.entries(groupedEndpoints).map(([tag, endpoints]) => (
-                <Collapsible key={tag} open={openTag === tag} onOpenChange={(isOpen) => setOpenTag(isOpen ? tag : null)}>
+                <Collapsible key={tag} open={openTag === tag}
+                             onOpenChange={(isOpen) => setOpenTag(isOpen ? tag : null)}>
                     <CollapsibleTrigger asChild>
                         <Button
                             variant="ghost"
@@ -63,17 +68,18 @@ const Sidebar: React.FC<OpenAPISidebarProps> = ({ document }) => {
                             <div className="flex items-center space-x-2">
                                 <span className="font-semibold">{tag}</span>
                             </div>
-                            {openTag === tag ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                            {openTag === tag ? <ChevronUp className="w-4 h-4"/> : <ChevronDown className="w-4 h-4"/>}
                         </Button>
                     </CollapsibleTrigger>
                     <CollapsibleContent>
                         <div className="space-y-2 pl-4">
-                            {endpoints.map(({ path, method, operation }, index) => (
+                            {endpoints.map(({path, method, operation}, index) => (
                                 <div
                                     key={`${path}-${method}-${index}`}
                                     className={`flex items-center space-x-2 p-2 hover:bg-secondary/20 cursor-pointer hover:border-l-4 hover:bg-secondary transition-all duration-200`}
                                 >
-                                    <Badge variant={'default'} className={`${httpMethodColors[method.toLowerCase()]} text-white uppercase w-14 flex justify-center items-center`}>
+                                    <Badge variant={'default'}
+                                           className={`${httpMethodColors[method.toLowerCase()]} text-white uppercase w-14 flex justify-center items-center`}>
                                         {method}
                                     </Badge>
                                     <div className="flex-1 min-w-0">
