@@ -1,16 +1,9 @@
 import React from 'react';
 import { useApiSpec } from './hooks/useApiSpec';
-import { OpenAPIV3 } from "openapi-types";
-import {
-    Card,
-    CardContent,
-    CardHeader,
-    CardTitle
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Header from "@/components/openapi/Header";
 import Sidebar from "@/components/openapi/Sidebar";
+import Auth from "@/components/openapi/Auth";
+import Servers from "@/components/openapi/Servers";
 
 export const SkuseDocumentation: React.FC = () => {
     const { spec, error, isLoading } = useApiSpec();
@@ -19,26 +12,18 @@ export const SkuseDocumentation: React.FC = () => {
     if (error) return <div>Erreur : {error.message}</div>;
     if (!spec) return null;
 
-    const getMethodColor = (method: string) => {
-        switch(method.toLowerCase()) {
-            case 'get': return 'bg-green-100 text-green-800';
-            case 'post': return 'bg-blue-100 text-blue-800';
-            case 'put': return 'bg-yellow-100 text-yellow-800';
-            case 'delete': return 'bg-red-100 text-red-800';
-            default: return 'bg-gray-100 text-gray-800';
-        }
-    };
-
     return (
-        <div className="min-h-screen bg-gray-50">
-            <div className="flex">
-                <div className="w-1/3">
-                    <Sidebar document={spec} />
-                </div>
-                <div className="w-2/3">
-                    <Header document={spec} />
+        <div className="min-h-screen bg-gray-50 flex">
+            <div className="w-70 bg-white border-r">
+                <Sidebar document={spec}/>
+            </div>
+            <div className="flex-1 m-2">
+                <Header document={spec}/>
+                <div className="grid lg:grid-cols-2 gap-2 mt-2">
+                    <Servers servers={spec.servers}/>
+                    <Auth securitySchemes={spec.components.securitySchemes}/>
                 </div>
             </div>
         </div>
     );
-};
+}
