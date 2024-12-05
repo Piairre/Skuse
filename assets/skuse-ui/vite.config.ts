@@ -14,8 +14,7 @@ export default defineConfig({
       name: 'SkuseUI',
       fileName: (format) => `skuse.${format}.js`
     },
-    outDir: '../../Resources/public',
-    assetsDir: 'build',
+    outDir: '../../public',
     rollupOptions: {
       external: ['react', 'react-dom'],
       output: {
