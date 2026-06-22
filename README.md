@@ -1,42 +1,72 @@
-# 🎨 Skuse
+# Skuse
 
-> 💡 Pronounced "skews" `/skjuːz/`
+> Pronounced "skews" `/skjuːz/`
 
-## 🌈 What is Skuse?
+A modern OpenAPI documentation viewer for Symfony, powered by [skuse-ui](https://github.com/Piairre/skuse-ui).
 
-Skuse is a modern and user-friendly alternative to Swagger UI for PHP frameworks, while maintaining 100% compatibility with the OpenAPI specification. Our goal ? Making your API documentation as beautiful as it is functional ! ✨
+## Installation
 
-## 🤔 Why "Skuse"?
+```bash
+composer require piairre/skuse
+```
 
-The name "Skuse" is inspired by [this iconic viral moment](https://www.instagram.com/p/C7rs1Bit36b/) from French comedy legend Laurent Baffie. Just like him, we want to bring some fun and originality !
+Register the bundle in `config/bundles.php`:
 
-## 🚧 Project Status
+```php
+return [
+    // ...
+    Piairre\Skuse\PiairreSkuseBundle::class => ['all' => true],
+];
+```
 
-⚠️ The project is currently under active development. No releases are available yet, but we're working hard to bring you something really awesome !
+Create `config/packages/piairre_skuse.yaml`:
 
-## ✨ Planned Features
+```yaml
+piairre_skuse:
+    open_api_url: '/docs.json'   # path or full URL to your OpenAPI spec
+    theme: system                 # light | dark | system (default: system)
+```
 
-- 🎯 Modern and intuitive user interface
-- 🚀 Smooth and fast navigation
-- 📱 Responsive design
-- 🔍 Advanced search capabilities
-- 🛠️ Deep customization options
-- 🤝 Full OpenAPI compatibility
+Create `config/routes/piairre_skuse.yaml`:
 
-## 🔜 Coming Soon
+```yaml
+piairre_skuse:
+    resource: '@PiairreSkuseBundle/config/routes.yaml'
+```
 
-Stay tuned ! We're cooking up some amazing features that will make your API documentation more enjoyable than ever.
+Your documentation is now available at `/api-docs`.
 
-## 🤝 Contributing
+## Configuration
 
-The project isn't open to external contributions yet, but keep an eye on this repo - we'll soon open the doors to enthusiastic contributors !
+| Option | Required | Default | Description |
+|--------|----------|---------|-------------|
+| `open_api_url` | yes | — | Path or URL to your OpenAPI JSON/YAML spec |
+| `theme` | no | `system` | Color theme: `light`, `dark`, or `system` |
 
-## 📝 License
+### Custom route prefix
 
-[MIT License](LICENSE)
+To serve the docs at a different path, override the prefix in your routes config:
 
----
+```yaml
+piairre_skuse:
+    resource: '@PiairreSkuseBundle/config/routes.yaml'
+    prefix: /docs
+```
 
-<div style="text-align: center">
-🌟 Made with ❤️ by the Skuse team 🌟
-</div>
+### API Platform
+
+API Platform exposes its OpenAPI spec at `/api/docs.json` by default:
+
+```yaml
+piairre_skuse:
+    open_api_url: '/api/docs.json'
+```
+
+## Requirements
+
+- PHP >= 8.1
+- Symfony >= 6.4
+
+## License
+
+[MIT](LICENSE)
