@@ -12,8 +12,8 @@
     <script src="https://cdn.jsdelivr.net/npm/skuse-ui@{{ skuse_ui_version }}/dist/skuse-ui.iife.js"></script>
     <script>
         SkuseUI.mount('#skuse-ui', {
-            openApiUrl: '{{ open_api_url }}',
-            theme: '{{ theme }}'
+            openApiUrl: '{{ open_api_url|escape('js') }}',
+            theme: '{{ theme|escape('js') }}'
         });
     </script>
 </body>
