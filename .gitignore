@@ -1,5 +1,6 @@
 # Symfony
 vendor/
+composer.lock
 var/
 *.log
 .env*

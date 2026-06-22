@@ -1,15 +1,12 @@
 {
   "name": "piairre/skuse",
-  "description": "Modern OpenAPI documentation UI alternative to Swagger",
+  "description": "Modern OpenAPI documentation UI for Symfony — powered by skuse-ui",
   "version": "0.1.0",
   "type": "symfony-bundle",
   "require": {
-    "php": ">=7.4",
-    "symfony/framework-bundle": "^5.4.24 || ^6.4 || ^7.0",
-    "zircote/swagger-php": "^4.11"
-  },
-  "scripts": {
-    "build-assets": "cd assets/skuse-ui && pnpm install && pnpm run build"
+    "php": ">=8.1",
+    "symfony/framework-bundle": "^6.4 || ^7.0 || ^8.0",
+    "symfony/twig-bundle": "^6.4 || ^7.0 || ^8.0"
   },
   "autoload": {
     "psr-4": {

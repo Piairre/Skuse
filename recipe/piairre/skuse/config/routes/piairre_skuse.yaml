@@ -1,0 +1,2 @@
+piairre_skuse:
+    resource: '@PiairreSkuseBundle/config/routes.yaml'

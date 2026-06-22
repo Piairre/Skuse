@@ -5,8 +5,9 @@ services:
     autowire: true
     autoconfigure: true
 
-  # Generator
-  Piairre\Skuse\Generator\OpenApiGenerator: ~
-
-  # Controller
-  Piairre\Skuse\Controller\DocumentationController: ~
+  Piairre\Skuse\Controller\DocumentationController:
+    arguments:
+      $openApiUrl: '%piairre_skuse.open_api_url%'
+      $theme: '%piairre_skuse.theme%'
+    tags:
+      - { name: controller.service_arguments }
