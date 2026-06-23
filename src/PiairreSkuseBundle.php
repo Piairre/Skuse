@@ -8,8 +8,6 @@ use Piairre\Skuse\DependencyInjection\PiairreSkuseExtension;
 
 class PiairreSkuseBundle extends Bundle
 {
-    public const SKUSE_UI_VERSION = '0.1.5';
-
     public function getPath(): string
     {
         return dirname(__DIR__);

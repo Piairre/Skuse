@@ -2,7 +2,6 @@
 
 namespace Piairre\Skuse\Controller;
 
-use Piairre\Skuse\PiairreSkuseBundle;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,7 +18,6 @@ class DocumentationController extends AbstractController
         return $this->render('@PiairreSkuse/documentation.html.twig', [
             'open_api_url' => $this->openApiUrl,
             'theme' => $this->theme,
-            'skuse_ui_version' => PiairreSkuseBundle::SKUSE_UI_VERSION,
         ]);
     }
 }
